@@ -1,5 +1,5 @@
 var rowArray = [];
-setInterval(draw, 3); // 30 is the number of mils between
+setInterval(draw, 30); // 30 is the number of mils between
 var buffs = [];
 buffs.push( document.createElement('canvas') );
 buffs.push( document.createElement('canvas') );
@@ -7,10 +7,16 @@ document.body.appendChild(buffs[0]);
 document.body.appendChild(buffs[1]); 
 var buffFlag = 0;
 
-var width = buffs[0].width = buffs[1].width = 400, 
-    height = buffs[0].height = buffs[1].height = 400;
+var width = buffs[0].width = buffs[1].width = window.innerWidth; //400; 
+var height = buffs[0].height = buffs[1].height = window.innerHeight; //400;
 
 c = buffs[0].getContext('2d');
+c.fillStyle = 'black';
+c.fillRect(0, 0, width, height);
+c = buffs[1].getContext('2d');
+c.fillStyle = 'black';
+c.fillRect(0, 0, width, height);
+
 buffs[0].style.visibility='visible';
 buffs[1].style.visibility='hidden';
 var pxHeight = 1
@@ -78,11 +84,11 @@ function draw() {
     if(rowArray.length < 1){
        initRow();
     } 
-    c.clearRect(0, 0, width, height);
-    var len = rowArray.length;
-    for(var i=0;i<len;i++){
-        drawRow(rowArray[i],i);
-    }
+    //c.clearRect(0, 0, width, height);
+    //for(var i=0;i<len;i++){
+    copyBuffs();
+    drawRow();//rowArray[i],i);
+    //}
     flipBuffs();
     if(rowArray.length==pxPerTall){
         delete rowArray.pop();
@@ -92,14 +98,22 @@ function draw() {
 }
 
 
-function drawRow(rowToDraw,y) {
+function drawRow(){//rowToDraw,y) {
     for(var i=0;i<pxPerRow;i++){
-        if(rowToDraw.get(i)){
+        if(rowArray[0].get(i)){
             c.fillStyle = 'black';
         } else { 
             c.fillStyle = 'white';
         }
-        c.fillRect(i, y, 1, 1);
+        c.fillRect(i, 0, 1, 1);
+    }
+}
+
+function copyBuffs(){
+    if(buffFlag){
+        c.drawImage(buffs[1],0,0,width,height-1,0,1,width,height-1);
+    } else {
+        c.drawImage(buffs[0],0,0,width,height-1,0,1,width,height-1);
     }
 }
 
