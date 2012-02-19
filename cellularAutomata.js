@@ -1,13 +1,18 @@
 var rowArray = [];
 setInterval(draw, 3); // 30 is the number of mils between
+var buffs = [];
+buffs.push( document.createElement('canvas') );
+buffs.push( document.createElement('canvas') );
+document.body.appendChild(buffs[0]); 
+document.body.appendChild(buffs[1]); 
+var buffFlag = 0;
 
-var canvas = document.createElement('canvas'); 
-document.body.appendChild(canvas); 
+var width = buffs[0].width = buffs[1].width = 400, 
+    height = buffs[0].height = buffs[1].height = 400;
 
-var width = canvas.width = 400, 
-    height = canvas.height = 400,
-    c = canvas.getContext('2d');
-
+c = buffs[0].getContext('2d');
+buffs[0].style.visibility='visible';
+buffs[1].style.visibility='hidden';
 var pxHeight = 1
 var pxWidth = 1
 var pxPerRow = Math.floor(width / pxWidth);
@@ -78,6 +83,7 @@ function draw() {
     for(var i=0;i<len;i++){
         drawRow(rowArray[i],i);
     }
+    flipBuffs();
     if(rowArray.length==pxPerTall){
         delete rowArray.pop();
     }
@@ -97,7 +103,19 @@ function drawRow(rowToDraw,y) {
     }
 }
 
-
+function flipBuffs(){
+    if(buffFlag){
+        c = buffs[buffFlag].getContext('2d');
+        buffs[buffFlag].style.visibility='hidden';
+        buffFlag--;
+        buffs[buffFlag].style.visibility='visible';
+    }else{
+        c = buffs[buffFlag].getContext('2d');
+        buffs[buffFlag].style.visibility='hidden';
+        buffFlag++;
+        buffs[buffFlag].style.visibility='visible';
+    }
+}
 
 
 
