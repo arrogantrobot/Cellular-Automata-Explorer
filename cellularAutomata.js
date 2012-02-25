@@ -1,30 +1,94 @@
-var rowArray = [];
-setInterval(draw, 30); // 30 is the number of mils between
-var buffs = [];
-buffs.push( document.createElement('canvas') );
-buffs.push( document.createElement('canvas') );
-document.body.appendChild(buffs[0]); 
-document.body.appendChild(buffs[1]); 
-var buffFlag = 0;
 
-var width = buffs[0].width = buffs[1].width = window.innerWidth; //400; 
-var height = buffs[0].height = buffs[1].height = window.innerHeight; //400;
+function onInit(){  
+    window.rowArray = [];
+    window.buffs = [];
+    window.buffFlag = 0;
+    window.pause = 0;
+    window.width;
+    window.height;
+    window.pxHeight = 1
+    window.pxWidth = 1
+    window.pxPerRow;
+    window.pxPerTall;
+    window.rule;
+    window.mask;
+    window.rule_submit_button;
+    window.rule_textbox;
+    window.showDetails = 0;
+    buffs.push( document.createElement('canvas') );
+    buffs.push( document.createElement('canvas') );
+    buffs[0].setAttribute("id","buff1");
+    buffs[1].setAttribute("id","buff2");
+    document.body.appendChild(buffs[0]); 
+    document.body.appendChild(buffs[1]); 
+    width = buffs[0].width = buffs[1].width = window.innerWidth-4;//400; 
+    height = buffs[0].height = buffs[1].height = 400;//window.innerHeight; //400;
+    initCanvases();
+    pxPerRow = Math.floor(width / pxWidth);
+    pxPerTall = Math.floor(height/ pxHeight);
+    rule = 30;
+    mask = initMask();
+    initButtons();
+    setInterval(draw, 30); // 30 is the number of mils between
+    document.addEventListener('keydown', function(event) {
+        if(event.keyCode == 83)  {
+            Canvas2Image.saveAsPNG(buffs[buffFlag]);
+        }
+        if(event.keyCode == 32) {
+            pause = pause ? 0 : 1;
+        }
+        if (event.keyCode == 39){
+            setRule(rule+1);
+        }
+        if (event.keyCode == 37){
+            setRule(rule-1);
+        }
+        if (event.keyCode == 82){
+            resetImage();
+        }
+        if (event.keyCode == 68){
+            showHideDetail();
+        }
+    });
+}
 
-c = buffs[0].getContext('2d');
-c.fillStyle = 'black';
-c.fillRect(0, 0, width, height);
-c = buffs[1].getContext('2d');
-c.fillStyle = 'black';
-c.fillRect(0, 0, width, height);
+function resetImage() {
+    rowArray = [];
+    initCanvases();
+}
 
-buffs[0].style.visibility='visible';
-buffs[1].style.visibility='hidden';
-var pxHeight = 1
-var pxWidth = 1
-var pxPerRow = Math.floor(width / pxWidth);
-var pxPerTall = Math.floor(height/ pxHeight);
-var rule = 30;
-var mask = initMask();
+function initCanvases() {
+    c = buffs[0].getContext('2d');
+    c.fillStyle = 'black';
+    c.fillRect(0, 0, width, height);
+    c = buffs[1].getContext('2d');
+    c.fillStyle = 'black';
+    c.fillRect(0, 0, width, height);
+
+    buffs[0].style.visibility='visible';
+    buffs[1].style.visibility='hidden';
+}
+
+function initButtons() {
+    rule_submit_button = document.getElementById("rule_submit");
+    rule_textbox = document.getElementById("rule_textbox");
+}
+
+function ruleSubmit() {
+    setRule(rule_textbox.value);
+    rule_textbox.focus();
+    rule_textbox.blur();
+}
+
+function textReturn(e){
+    if (typeof e == 'undefined' && window.event) { 
+        e = window.event; 
+    }
+    if (e.keyCode == 13)
+    {
+        document.rule_submit_button.click();
+    }
+}
 
 function initRow() {
     var row = new BitArray();
@@ -84,17 +148,16 @@ function draw() {
     if(rowArray.length < 1){
        initRow();
     } 
-    //c.clearRect(0, 0, width, height);
-    //for(var i=0;i<len;i++){
-    copyBuffs();
-    drawRow();//rowArray[i],i);
-    //}
-    flipBuffs();
-    if(rowArray.length==pxPerTall){
-        delete rowArray.pop();
+    if(pause){
+    } else {
+        copyBuffs();
+        drawRow();
+        flipBuffs();
+        if(rowArray.length==pxPerTall){
+            delete rowArray.pop();
+        }
+        rowArray.unshift( newRow(rowArray[0]) );
     }
-    
-    rowArray.unshift( newRow(rowArray[0]) );
 }
 
 
@@ -131,5 +194,22 @@ function flipBuffs(){
     }
 }
 
+function setRule( ruleNum ) {
+    if((ruleNum > 255) || (ruleNum < 0)){
+        alert("Rule must be between 0 and 255.");
+        return;
+    }
+    rule = ruleNum;
+    if(showDetails){
+        updateDetails();
+    }
+}
 
+function showHideDetails() {
+    if(showDetails == 1){
+        showDetails = 0;
+    } else {
+        showDetails = 1;
+    }
+}
 

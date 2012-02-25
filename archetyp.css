@@ -1,0 +1,36 @@
+body { 
+    background-color:black; 
+    margin:0px; 
+}
+#control_panel {
+    font-family: "Courier New",Monospace;
+    color: white;
+    position:fixed;
+    top:400px;
+}
+
+ca {
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+#buff1 {
+    position:absolute;
+    top:2;
+    left:0;
+    visibility: hidden;
+    border: solid 2px #ffffff;
+}
+#buff2 {
+    position:absolute;
+    top:2;
+    left:0;
+    visibility: visible;
+    border: solid 2px #ffffff;
+}
+
+#rule_textbox {
+    width:50px;
+    text-align:right;
+}

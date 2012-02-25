@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="en"> 
+    <meta charset="utf-8"> 
+    <head>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="archetyp.css" />
+        <title>Cellular Automata Rule Explorer</title>
+    </head>
+    <body onload="onInit()">
+        <script src="bit-array.js"></script>
+        <script src="base64.js"></script>
+        <script src="canvas2image.js"></script>
+        <script src="cellularAutomata.js"></script>
+        <div id="ca">
+            <canvas id="buff1" width="400" height="400">
+                <p>The canvas is not visible for some reason.</p>
+            </canvas>
+            <canvas id="buff2" width="400" height="400">
+                <p>The canvas is not visible for some reason.</p>
+            </canvas>
+        </div>
+        <div id="control_panel">
+            <p> Cellular Automata Rule Explorer</p>
+            <ul>
+                <li> [Space Bar] pause and unpause</li>
+                <li> [Left Arrow] decrement rule by one</li> 
+                <li> [Right Arrow] increment rule by one</li> 
+                <li> [s] save current image</li> 
+                <li> [r] reset the image</li> 
+            </ul>
+            <p>
+                <table>
+                    <tr>
+                        <td>
+                            <p>
+                                Rule #
+                                <input id="rule_textbox" type="text" value="30" onkeypress="textReturn(event);" />
+                                <button type="button" id="rule_submit" onClick="ruleSubmit();">Change Rule</button>
+                            </p>
+                        </td>
+                    <tr>
+                </table>
+            </p>
+        </div>
+    </body>
+    
+    
+</html>
+
+
+ 
