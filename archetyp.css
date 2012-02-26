@@ -6,8 +6,18 @@ body {
     font-family: "Courier New",Monospace;
     color:white;
     position:relative;
-    top:500px;
-    width:500px;
+    top:400px;
+    border: solid 2px #ffffff;
+    padding: 1px;
+}
+
+.details {
+    font-family: "Courier New",Monospace;
+    color:white;
+    position:relative;
+    float: right;
+    top:400px;
+    width:400px;
     border: solid 2px #ffffff;
     padding: 1px;
 }
