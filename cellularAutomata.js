@@ -17,6 +17,14 @@ function onInit(){
     window.showDetails = 0;
     window.control_panel = document.getElementById("control_panel");
     window.ca = document.getElementById("ca");
+    window.column1 = document.getElementById("column1");
+    window.column2 = document.getElementById("column2");
+    window.detail_can = document.getElementById("detail_can");
+
+    rule_submit_button = document.getElementById("rule_submit");
+    rule_submit_button.setAttribute("onclick","ruleSubmit();");
+    rule_textbox = document.getElementById("rule_textbox");
+    rule_textbox.setAttribute("onkeypress","textReturn(event);");
 
     buffs.push( document.createElement('canvas') );
     buffs.push( document.createElement('canvas') );
@@ -27,17 +35,17 @@ function onInit(){
     ca.appendChild(buffs[1]); 
 
     width = buffs[0].width = buffs[1].width = window.innerWidth-4;//400; 
-    height = buffs[0].height = buffs[1].height = window.innerHeight-313; //400;
+    height = buffs[0].height = buffs[1].height = window.innerHeight-253; //400;
     control_panel.style.top= (height+2)+"px";
-    //control_panel.setAttribute("top",parseInt(height)+"px");
-    //control_panel.setAttribute("width",parseInt(width)+"px");
+    detail_can.width = width - 504;
+    detail_can.height = 236;
 
     initCanvases();
     pxPerRow = Math.floor(width / pxWidth);
     pxPerTall = Math.floor(height/ pxHeight);
     rule = 30;
     mask = initMask();
-    initButtons();
+    //initButtons();
     setInterval(draw, 30); // 30 is the number of mils between
     document.addEventListener('keydown', function(event) {
         if(event.keyCode == 83)  {
@@ -64,6 +72,7 @@ function onInit(){
 function resetImage() {
     rowArray = [];
     initCanvases();
+    ruleSubmit();
 }
 
 function initCanvases() {
@@ -79,8 +88,6 @@ function initCanvases() {
 }
 
 function initButtons() {
-    rule_submit_button = document.getElementById("rule_submit");
-    rule_textbox = document.getElementById("rule_textbox");
 }
 
 function ruleSubmit() {
@@ -90,12 +97,12 @@ function ruleSubmit() {
 }
 
 function textReturn(e){
-    //if (typeof e == 'undefined' && window.event) { 
-    //    e = window.event; 
-    //}
+    if (typeof e == 'undefined' && window.event) { 
+        e = window.event; 
+    }
     if (e.keyCode == 13)
     {
-        document.rule_submit_button.click();
+        rule_submit_button.click();
     }
 }
 

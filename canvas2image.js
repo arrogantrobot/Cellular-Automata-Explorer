@@ -147,6 +147,10 @@ var Canvas2Image = (function() {
     var saveFile = function(strData) {
         document.location.href = strData;
     }
+    var downloadFile = function(strData) {
+        window.location = 'file:///' + document.form.selectedFile.value;
+        
+    }
 
     var makeDataURI = function(strData, strMime) {
         return "data:" + strMime + ";base64," + strData;

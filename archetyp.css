@@ -2,29 +2,34 @@ body {
     background-color:black; 
     margin:0px; 
 }
+
 .control_panel {
     font-family: "Courier New",Monospace;
     color:white;
     position:relative;
     top:400px;
-    border: solid 2px #ffffff;
-    padding: 1px;
 }
 
-.details {
+.column1 {
+    border: solid 2px #ffffff;
+    float:left;
+    position:absolute;
+    width: 500px;
+}
+.column2 {
+    float: right;
     font-family: "Courier New",Monospace;
     color:white;
-    position:relative;
+    position:absolute;
     float: right;
-    top:400px;
-    width:400px;
+    top:0px;
+    right:0px;
     border: solid 2px #ffffff;
     padding: 1px;
 }
 
 p {
     text-align: center;
-    padding: 5px;
 }
 h3 {
     text-align: center;
