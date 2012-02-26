@@ -27,7 +27,7 @@ function onInit(){
     ca.appendChild(buffs[1]); 
 
     width = buffs[0].width = buffs[1].width = window.innerWidth-4;//400; 
-    height = buffs[0].height = buffs[1].height = window.innerHeight-350; //400;
+    height = buffs[0].height = buffs[1].height = window.innerHeight-313; //400;
     control_panel.style.top= (height+2)+"px";
     //control_panel.setAttribute("top",parseInt(height)+"px");
     //control_panel.setAttribute("width",parseInt(width)+"px");
