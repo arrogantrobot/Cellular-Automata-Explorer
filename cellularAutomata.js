@@ -15,14 +15,23 @@ function onInit(){
     window.rule_submit_button;
     window.rule_textbox;
     window.showDetails = 0;
+    window.control_panel = document.getElementById("control_panel");
+    window.ca = document.getElementById("ca");
+
     buffs.push( document.createElement('canvas') );
     buffs.push( document.createElement('canvas') );
-    buffs[0].setAttribute("id","buff1");
-    buffs[1].setAttribute("id","buff2");
-    document.body.appendChild(buffs[0]); 
-    document.body.appendChild(buffs[1]); 
+    buffs[0].setAttribute("class","buff1");
+    buffs[1].setAttribute("class","buff2");
+
+    ca.appendChild(buffs[0]); 
+    ca.appendChild(buffs[1]); 
+
     width = buffs[0].width = buffs[1].width = window.innerWidth-4;//400; 
-    height = buffs[0].height = buffs[1].height = 400;//window.innerHeight; //400;
+    height = buffs[0].height = buffs[1].height = window.innerHeight-350; //400;
+    control_panel.style.top= (height+2)+"px";
+    //control_panel.setAttribute("top",parseInt(height)+"px");
+    //control_panel.setAttribute("width",parseInt(width)+"px");
+
     initCanvases();
     pxPerRow = Math.floor(width / pxWidth);
     pxPerTall = Math.floor(height/ pxHeight);
@@ -81,9 +90,9 @@ function ruleSubmit() {
 }
 
 function textReturn(e){
-    if (typeof e == 'undefined' && window.event) { 
-        e = window.event; 
-    }
+    //if (typeof e == 'undefined' && window.event) { 
+    //    e = window.event; 
+    //}
     if (e.keyCode == 13)
     {
         document.rule_submit_button.click();
@@ -194,12 +203,14 @@ function flipBuffs(){
     }
 }
 
-function setRule( ruleNum ) {
-    if((ruleNum > 255) || (ruleNum < 0)){
-        alert("Rule must be between 0 and 255.");
+function setRule( r ) {
+    var newRule = parseInt(r);
+    if((newRule > 255) || (newRule < 1)){
+        alert("Rule must be between 1 and 255.");
         return;
     }
-    rule = ruleNum;
+    rule = newRule;
+    rule_textbox.value = newRule;
     if(showDetails){
         updateDetails();
     }

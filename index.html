@@ -11,16 +11,10 @@
         <script src="base64.js"></script>
         <script src="canvas2image.js"></script>
         <script src="cellularAutomata.js"></script>
-        <div id="ca">
-            <canvas id="buff1" width="400" height="400">
-                <p>The canvas is not visible for some reason.</p>
-            </canvas>
-            <canvas id="buff2" width="400" height="400">
-                <p>The canvas is not visible for some reason.</p>
-            </canvas>
-        </div>
-        <div id="control_panel">
-            <p> Cellular Automata Rule Explorer</p>
+        <div class="ca" id="ca"></div>
+        <div class="control_panel" id="control_panel">
+            <p><h3> Cellular Automata Rule Explorer</h3></p>
+            <hr />
             <ul>
                 <li> [Space Bar] pause and unpause</li>
                 <li> [Left Arrow] decrement rule by one</li> 
@@ -28,18 +22,11 @@
                 <li> [s] save current image</li> 
                 <li> [r] reset the image</li> 
             </ul>
+            <hr />
             <p>
-                <table>
-                    <tr>
-                        <td>
-                            <p>
-                                Rule #
-                                <input id="rule_textbox" type="text" value="30" onkeypress="textReturn(event);" />
-                                <button type="button" id="rule_submit" onClick="ruleSubmit();">Change Rule</button>
-                            </p>
-                        </td>
-                    <tr>
-                </table>
+                Rule #
+                <input id="rule_textbox" type="text" value="30" onkeypress="textReturn(event);" />
+                <button type="button" id="rule_submit" onClick="ruleSubmit();">Change Rule</button>
             </p>
         </div>
     </body>
