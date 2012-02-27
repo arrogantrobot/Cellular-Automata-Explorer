@@ -1,5 +1,6 @@
 
 function onInit(){  
+    window.ruleSets = [];
     window.rowArray = [];
     window.buffs = [];
     window.buffFlag = 0;
@@ -14,12 +15,17 @@ function onInit(){
     window.mask;
     window.rule_submit_button;
     window.rule_textbox;
-    window.showDetails = 0;
+    window.showDetails = 1;
     window.control_panel = document.getElementById("control_panel");
     window.ca = document.getElementById("ca");
     window.column1 = document.getElementById("column1");
     window.column2 = document.getElementById("column2");
     window.detail_can = document.getElementById("detail_can");
+    window.onresize = function(){ 
+        window.location.reload();
+    };
+
+    initRuleSets();
 
     rule_submit_button = document.getElementById("rule_submit");
     rule_submit_button.setAttribute("onclick","ruleSubmit();");
@@ -47,6 +53,7 @@ function onInit(){
     mask = initMask();
     //initButtons();
     setInterval(draw, 30); // 30 is the number of mils between
+    updateDetails();
     document.addEventListener('keydown', function(event) {
         if(event.keyCode == 83)  {
             Canvas2Image.saveAsPNG(buffs[buffFlag]);
@@ -229,5 +236,66 @@ function showHideDetails() {
     } else {
         showDetails = 1;
     }
+}
+
+function updateDetails(){
+    det_can = window.detail_can.getContext('2d');
+    det_can.fillStyle='black';
+    det_can.fillRect(0,0,1000,1000);//det_can.width,det_can.height);
+    var x_offset = 130;
+    var y_offset = 60;
+
+    det_can.font = "16pt Courier New";
+    det_can.fillStyle = 'white';
+    det_can.fillText("Rule #: "+rule,x_offset+160,y_offset-20);
+
+    det_can.font = "8pt Courier New";
+    det_can.fillText("  future  state:",x_offset-120,y_offset+9);
+    det_can.fillText("previous states:",x_offset-120,y_offset+25);
+
+    for(var i=0;i<8;i++){
+        drawLocalRule(i,det_can,x_offset,y_offset);
+        x_offset+=60;
+    }
+}
+
+function drawLocalRule(ruleNum,det_can,x_offset,y_offset){
+    var x_col_1=0,x_col_2=19,x_col_3=38;
+    var y_row_1=0,y_row_2=17;
+    var box_w=12,box_h=10;
+
+    det_can.fillStyle = 'gray';
+    det_can.fillRect(x_offset-2,y_offset-2,54,31);
+
+
+    det_can.fillStyle = (rule & mask[ruleNum]) ? 'black' : 'white';
+    det_can.fillRect(   x_offset+x_col_2, y_offset,
+                        box_w, box_h);
+
+    det_can.fillStyle = (ruleNum & 1) ? 'black' : 'white';
+    det_can.fillRect(   x_offset+x_col_1, y_offset+y_row_2,
+                        box_w, box_h);
+
+    det_can.fillStyle = (ruleNum & 2) ? 'black' : 'white';
+    det_can.fillRect(   x_offset+x_col_2, y_offset+y_row_2,
+                        box_w, box_h);
+
+    det_can.fillStyle = (ruleNum & 4) ? 'black' : 'white';
+    det_can.fillRect(   x_offset+x_col_3, y_offset+y_row_2,
+                        box_w, box_h);
+
+    det_can.fillStyle = 'white';
+    det_can.font = "8pt Courier New";
+    det_can.fillText(ruleNum,x_offset+x_col_2+3,y_offset+y_row_2+25);
+}
+
+function initRuleSets(){
+    for(var i=0;i<8;i++){
+        var ba = new BitArray();
+        ba.set(0,i & 1);
+        ba.set(1,i & 2);
+        ba.set(2,i & 4);
+        window.ruleSets.push(ba);
+    }    
 }
 
