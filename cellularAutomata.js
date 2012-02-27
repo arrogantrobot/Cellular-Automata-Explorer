@@ -4,7 +4,7 @@ function onInit(){
     window.rowArray = [];
     window.buffs = [];
     window.buffFlag = 0;
-    window.pause = 0;
+    window.pause = 1;
     window.width;
     window.height;
     window.pxHeight = 1
@@ -242,7 +242,7 @@ function updateDetails(){
     det_can = window.detail_can.getContext('2d');
     det_can.fillStyle='black';
     det_can.fillRect(0,0,1000,1000);//det_can.width,det_can.height);
-    var x_offset = 130;
+    var x_offset = 80;
     var y_offset = 60;
 
     det_can.font = "16pt Courier New";
@@ -250,8 +250,8 @@ function updateDetails(){
     det_can.fillText("Rule #: "+rule,x_offset+160,y_offset-20);
 
     det_can.font = "8pt Courier New";
-    det_can.fillText("  future  state:",x_offset-120,y_offset+9);
-    det_can.fillText("previous states:",x_offset-120,y_offset+25);
+    det_can.fillText("  future:",x_offset-70,y_offset+9);
+    det_can.fillText("previous:",x_offset-70,y_offset+25);
 
     for(var i=0;i<8;i++){
         drawLocalRule(i,det_can,x_offset,y_offset);
