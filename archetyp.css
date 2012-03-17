@@ -6,6 +6,7 @@ body {
 .control_panel {
     font-family: "Courier New",Monospace;
     color:white;
+    font-size: 10pt;
     position:relative;
     top:400px;
 }
@@ -15,6 +16,7 @@ body {
     float:left;
     position:absolute;
     width: 500px;
+    height: 241px;
 }
 .column2 {
     float: right;
@@ -64,3 +66,10 @@ ul {
     width:50px;
     text-align:right;
 }
+
+.address {
+    font-family: "Courier New",Monospace;
+    color: white;
+    font-size: 8pt;
+}
+    

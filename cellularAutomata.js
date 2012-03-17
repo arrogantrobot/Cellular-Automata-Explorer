@@ -1,10 +1,29 @@
+/* By rob at archetyp.al
+
+Inspired by the one dimensional cellular-automata explored by
+Stephen Wolfram in "A New Kind of Science".
+
+There are many implementations of the one dimensional CA, but
+this particular project is meant to allow the user to explore the
+properties of the various rules by starting from initial conditions
+other than a single "on" cell in the center.
+
+This version still begins with the typical single "on" cell in the
+center at the first time-step or after a reset (r). However, the user
+can change the rule at any step, causing the output of the previous
+rule to be the input of the next rule. This leads to discoveries and
+an enjoyable interaction with the system and sense for how it works
+that does not come from merely reading about it or watching a single
+rule play out. 
+*/
+
 
 function onInit(){  
     window.ruleSets = [];
     window.rowArray = [];
     window.buffs = [];
     window.buffFlag = 0;
-    window.pause = 1;
+    window.pause = 0;
     window.width;
     window.height;
     window.pxHeight = 1
@@ -21,9 +40,12 @@ function onInit(){
     window.column1 = document.getElementById("column1");
     window.column2 = document.getElementById("column2");
     window.detail_can = document.getElementById("detail_can");
+
+/*
     window.onresize = function(){ 
         window.location.reload();
     };
+*/
 
     initRuleSets();
 
@@ -41,7 +63,7 @@ function onInit(){
     ca.appendChild(buffs[1]); 
 
     width = buffs[0].width = buffs[1].width = window.innerWidth-4;//400; 
-    height = buffs[0].height = buffs[1].height = window.innerHeight-253; //400;
+    height = buffs[0].height = buffs[1].height = window.innerHeight-270; //400;
     control_panel.style.top= (height+2)+"px";
     detail_can.width = width - 504;
     detail_can.height = 236;
@@ -49,9 +71,9 @@ function onInit(){
     initCanvases();
     pxPerRow = Math.floor(width / pxWidth);
     pxPerTall = Math.floor(height/ pxHeight);
-    rule = 30;
+    rule = 129;
     mask = initMask();
-    //initButtons();
+    initButtons();
     setInterval(draw, 30); // 30 is the number of mils between
     updateDetails();
     document.addEventListener('keydown', function(event) {
