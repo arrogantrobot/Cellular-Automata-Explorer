@@ -44,12 +44,6 @@ function onInit(){
     window.column2 = document.getElementById("column2");
     window.detail_can = document.getElementById("detail_can");
 
-/*
-    window.onresize = function(){ 
-        window.location.reload();
-    };
-*/
-
     initRuleSets();
 
     rule_submit_button = document.getElementById("rule_submit");
@@ -58,15 +52,12 @@ function onInit(){
     rule_textbox.setAttribute("onkeypress","textReturn(event);");
 
     buffs.push( document.createElement('canvas') );
-    buffs.push( document.createElement('canvas') );
     buffs[0].setAttribute("class","buff1");
-    buffs[1].setAttribute("class","buff2");
 
     ca.appendChild(buffs[0]); 
-    ca.appendChild(buffs[1]); 
 
-    width = buffs[0].width = buffs[1].width = window.innerWidth-4;//400; 
-    height = buffs[0].height = buffs[1].height = window.innerHeight-270; //400;
+    width = buffs[0].width = buffs[0].width = window.innerWidth-4;//400; 
+    height = buffs[0].height = buffs[0].height = window.innerHeight-270; //400;
     control_panel.style.top= (height+2)+"px";
     detail_can.width = width - 504;
     detail_can.height = 236;
@@ -76,8 +67,7 @@ function onInit(){
     pxPerTall = Math.floor(height/ pxHeight);
     rule = 129;
     mask = initMask();
-    initButtons();
-    setInterval(draw, 30); // 30 is the number of mils between
+    setInterval(draw, 40); // 30 is the number of mils between
     updateDetails();
     document.addEventListener('keydown', function(event) {
         if(event.keyCode == 83)  {
@@ -111,15 +101,7 @@ function initCanvases() {
     c = buffs[0].getContext('2d');
     c.fillStyle = 'black';
     c.fillRect(0, 0, width, height);
-    c = buffs[1].getContext('2d');
-    c.fillStyle = 'black';
-    c.fillRect(0, 0, width, height);
-
     buffs[0].style.visibility='visible';
-    buffs[1].style.visibility='hidden';
-}
-
-function initButtons() {
 }
 
 function ruleSubmit() {
@@ -200,7 +182,6 @@ function draw() {
     } else {
         copyBuffs();
         drawRow();
-        flipBuffs();
         if(rowArray.length==pxPerTall){
             delete rowArray.pop();
         }
@@ -209,7 +190,7 @@ function draw() {
 }
 
 
-function drawRow(){//rowToDraw,y) {
+function drawRow(){
     for(var i=0;i<pxPerRow;i++){
         if(rowArray[0].get(i)){
             c.fillStyle = 'black';
@@ -221,25 +202,8 @@ function drawRow(){//rowToDraw,y) {
 }
 
 function copyBuffs(){
-    if(buffFlag){
-        c.drawImage(buffs[1],0,0,width,height-1,0,1,width,height-1);
-    } else {
-        c.drawImage(buffs[0],0,0,width,height-1,0,1,width,height-1);
-    }
-}
-
-function flipBuffs(){
-    if(buffFlag){
-        c = buffs[buffFlag].getContext('2d');
-        buffs[buffFlag].style.visibility='hidden';
-        buffFlag--;
-        buffs[buffFlag].style.visibility='visible';
-    }else{
-        c = buffs[buffFlag].getContext('2d');
-        buffs[buffFlag].style.visibility='hidden';
-        buffFlag++;
-        buffs[buffFlag].style.visibility='visible';
-    }
+    var buff = c.getImageData(0,0,width,height);
+    c.putImageData(buff,0,1);
 }
 
 function setRule( r ) {
